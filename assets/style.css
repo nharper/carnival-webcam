@@ -9,6 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   color: white;
 }
 
@@ -17,23 +18,13 @@ body {
   width: 100vw;
 }
 
-#img_container {
+.container {
   height: 100%;
   width: 100%;
 }
 
 #cam_image {
-  max-height: 100%;
-  max-width: 100%;
-}
-
-@media screen and (min-aspect-ratio: 4/3) {
-  #cam_image {
-    float: left;
-  }
-}
-
-@media screen and (max-aspect-ratio: 4/3) {
+  border: 0;
 }
 
 #sidebar-wrapper {

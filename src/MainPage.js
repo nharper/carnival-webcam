@@ -1,4 +1,5 @@
 var React = require('react');
+var Video = require('./Video');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -19,6 +20,7 @@ module.exports = React.createClass({
       } catch (e) {
         this.setState({error: "Error parsing config: " + e});
       }
+      this.setState({loading: false});
     }.bind(this);
     configRequest.open('GET', 'config.json', true);
     configRequest.send();
@@ -38,8 +40,9 @@ module.exports = React.createClass({
     } else {
       // TODO: finish this half
       return (
-        <div>
+        <div className='container'>
           {error}
+          <Video id={this.state.config.video} />
           <div id="sidebar-wrapper"></div>
         </div>
       );
