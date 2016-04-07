@@ -1,4 +1,5 @@
 var React = require('react');
+var Audio = require('./Audio');
 var Video = require('./Video');
 
 module.exports = React.createClass({
@@ -43,7 +44,9 @@ module.exports = React.createClass({
         <div className='container'>
           {error}
           <Video id={this.state.config.video} />
-          <div id="sidebar-wrapper"></div>
+          <div id="sidebar-wrapper">
+            <Audio path={this.state.config.streams[0].location} name={this.state.config.streams[0].name} />
+          </div>
         </div>
       );
     }
