@@ -9,6 +9,14 @@ module.exports = React.createClass({
     // TODO: wire this up to the audio node.
     this.setState({vol: this.refs.vol.value});
   },
+  toggleLeft: function() {
+    // TODO: wire this up to the audio node
+    this.setState({left: !this.state.left});
+  },
+  toggleRight: function() {
+    // TODO: wire this up to the audio node
+    this.setState({right: !this.state.right});
+  },
   componentDidMount: function() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
@@ -17,6 +25,8 @@ module.exports = React.createClass({
   },
   render: function() {
     var vol_display_level = Math.min(3, Math.ceil(this.state.vol * 4 / 100));
+    var left_class = this.state.left ? 'l' : 'l muted';
+    var right_class = this.state.right ? 'r' : 'r muted';
     return (
       <div>
         <h3>{this.props.name}</h3>
@@ -32,8 +42,8 @@ module.exports = React.createClass({
               onChange={this.changeVolume}
               ref="vol"
           /><span> </span>
-          <a href="#" className="l">L</a><span> </span>
-          <a href="#" className="r">R</a>
+          <a href="#" className={left_class} onClick={this.toggleLeft}>L</a><span> </span>
+          <a href="#" className={right_class} onClick={this.toggleRight}>R</a>
         </span>
         <p>TODO: ID table</p>
       </div>
