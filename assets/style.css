@@ -27,6 +27,12 @@ body {
   border: 0;
 }
 
+@media screen and (min-aspect-ratio: 16/9) {
+  #cam_image {
+    float: left;
+  }
+}
+
 #sidebar-wrapper {
   padding: 0px;
   /*
