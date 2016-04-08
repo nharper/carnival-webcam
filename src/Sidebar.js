@@ -5,7 +5,17 @@ var React = require('react');
 
 module.exports = React.createClass({
   render: function() {
-    var streams = '';
+    var streams = [];
+    for (var i in this.props.streams) {
+      var stream = this.props.streams[i];
+      streams.push(
+        <AudioControl
+            key={stream.name}
+            name={stream.name}
+            url={stream.location}
+        />
+      );
+    }
     return (
       <div id="sidebar-wrapper">
         <div id="sidebar">
