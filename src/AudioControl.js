@@ -6,15 +6,12 @@ module.exports = React.createClass({
     return {vol: 100, left: true, right: true};
   },
   changeVolume: function() {
-    // TODO: wire this up to the audio node.
     this.setState({vol: this.refs.vol.value});
   },
   toggleLeft: function() {
-    // TODO: wire this up to the audio node
     this.setState({left: !this.state.left});
   },
   toggleRight: function() {
-    // TODO: wire this up to the audio node
     this.setState({right: !this.state.right});
   },
   componentDidMount: function() {
@@ -22,6 +19,10 @@ module.exports = React.createClass({
     var context = new AudioContext();
     var channel = new RadioChannel(this.props.url, context);
     this.setState({channel: channel});
+  },
+  componentDidUpdate: function() {
+    this.state.channel.setLeftGain(this.state.left ? this.state.vol / 100 : 0);
+    this.state.channel.setRightGain(this.state.right ? this.state.vol / 100 : 0);
   },
   render: function() {
     var vol_display_level = Math.min(3, Math.ceil(this.state.vol * 4 / 100));

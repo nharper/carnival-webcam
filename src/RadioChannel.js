@@ -4,28 +4,10 @@ module.exports = function(path, context) {
   this.audio_ = new Audio(path);
   this.audio_.crossOrigin = "anonymous";
   this.audio_.autoplay = true;
-  // this.control_ = new AudioControl(node);
-  // this.id_manager_ = id_manager;
-  // this.id_display_ = new IdDisplay(node.querySelector('table.id'), 15);
-  this.use_stereo_panner_ = false;
-
-  var chrome_match = window.navigator.appVersion.match(/Chrome/);
-  // Using the StereoPannerNode in Chrome appears to be flaky, or possibly
-  // just using it with a script processor node. Either way, don't use
-  // StereoPannerNode with it.
-  if (context.createStereoPanner && !chrome_match) {
-    this.use_stereo_panner_ = true;
-  }
 
   // Create audio nodes.
-  if (this.use_stereo_panner_) {
-    this.panner_ = context.createStereoPanner();
-    console.log("Using new StereoPanner");
-  } else {
-    this.panner_ = context.createPanner();
-    console.log("Using fallback panner");
-  }
-  this.gain_ = context.createGain();
+  var left_channel = context.createGain();
+  var right_channel = context.createGain();
 
   // Create MDC decoder.
   this.decoder_ = new MdcDecoder(context.sampleRate);
@@ -42,7 +24,7 @@ module.exports = function(path, context) {
         console.log('Inputs are equal! We might be stuck in a loop. ' + JSON.stringify(audioEvent));
       }
       last_input = input;
-      console.log("Processing sample 0: " + input[0]);
+      console.log("Processing sample: " + input[0]);
     } catch (e) {
       console.log(e);
     }
@@ -80,38 +62,23 @@ module.exports = function(path, context) {
   // Create audio node from audio tag and route all audio nodes together.
   try {
     var source = context.createMediaElementSource(this.audio_);
-    source.connect(scriptProcessor);
-    source.connect(this.panner_);
-    this.panner_.connect(this.gain_);
-    this.gain_.connect(context.destination);
+    source.connect(scriptProcessor, 0);
+    source.connect(left_channel, 0);
+    source.connect(right_channel, 0);
+    var merger = context.createChannelMerger(2);
+    left_channel.connect(merger, 0, 0);
+    right_channel.connect(merger, 0, 1);
+    merger.connect(context.destination);
   } catch (e) {
     console.log(e);
   }
 
-  // Set callbacks to connect controls to audio, and connect MDC decoder
-  // to output.
-  /*
-  this.control_.setVolumeCallback(function(volume) {
-    this.gain_.gain.value = volume;
-  }.bind(this));
-  */
+  // Functions to set gain levels
+  this.setLeftGain = function(gain) {
+    left_channel.gain.value = gain;
+  };
 
-  /*
-  this.control_.setPanCallback(function(pan) {
-    if (this.use_stereo_panner_) {
-      this.panner_.pan.value = pan;
-    } else {
-      this.panner_.setPosition(pan, 0, 0);
-    }
-  }.bind(this));
-  */
-
-  /*
-  this.decoder_.setCallback(function(data) {
-    var display = this.id_manager_.prettyPrint(data);
-    if (display !== false) {
-      this.id_display_.addId(display);
-    }
-  }.bind(this));
-  */
+  this.setRightGain = function(gain) {
+    right_channel.gain.value = gain;
+  };
 };
