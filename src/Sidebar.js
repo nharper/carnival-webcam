@@ -4,6 +4,13 @@ var IDList = require('./IDList');
 var React = require('react');
 
 module.exports = React.createClass({
+  propTypes: {
+    streams: React.PropTypes.arrayOf(function(propValue, key, componentName) {
+      if (!propValue[key].name || !propValue[key].location) {
+        return new Error('Prop ' + propValue[key] + ' is invalid');
+      }
+    }),
+  },
   render: function() {
     var streams = [];
     for (var i in this.props.streams) {

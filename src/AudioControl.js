@@ -2,6 +2,10 @@ var React = require('react');
 var RadioChannel = require('./RadioChannel');
 
 module.exports = React.createClass({
+  propTypes: {
+    name: React.PropTypes.string.isRequired,
+    url: React.PropTypes.string.isRequired,
+  },
   getInitialState: function() {
     return {vol: 100, left: true, right: true};
   },
