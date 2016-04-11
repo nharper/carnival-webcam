@@ -23,7 +23,7 @@ body {
   width: 100%;
 }
 
-#cam_image {
+iframe {
   border: 0;
 }
 
