@@ -15,6 +15,11 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {id_store: IDStore};
   },
+  componentDidMount: function() {
+    for (var id in this.props.callsigns) {
+      IDStore.setCallsign(id, this.props.callsigns[id]);
+    }
+  },
   render: function() {
     var streams = [];
     for (var i in this.props.streams) {

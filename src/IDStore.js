@@ -1,7 +1,7 @@
 // Converts |n| to hex and pads to |l| digits.
 var intToHexPadded = function(n, l) {
   var r = n.toString(16);
-  while (n.length < l) {
+  while (r.length < l) {
     r = '0' + r;
   }
   return r;
@@ -27,7 +27,9 @@ module.exports = function() {
       }
       if (data.op == 1 && data.arg == 0) {
         return 'Last station: ' + display_unit;
-      } else if (data.op != 1) {
+      } else if (data.op == 1 && data.arg == 128) {
+        return 'Current station: ' + display_unit;
+      } else {
         var r = intToHexPadded(data.op, 2) + ' '
               + intToHexPadded(data.arg, 2) + ' ' + display_unit;
         if (data.extra0 != undefined) {
@@ -38,7 +40,9 @@ module.exports = function() {
         }
         return r;
       }
-      return false;
-    }
+    },
+    shouldDisplay: function(data) {
+      return data.op != 1 || data.arg == 0;
+    },
   };
 }();

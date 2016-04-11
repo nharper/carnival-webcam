@@ -1,5 +1,6 @@
 var React = require('react');
 var PghTime = require('./PghTime');
+var IDStore = require('./IDStore');
 
 module.exports = React.createClass({
   propTypes: {
@@ -14,6 +15,9 @@ module.exports = React.createClass({
     return {ids: [], counter: 0};
   },
   addId: function(id_obj) {
+    if (!IDStore.shouldDisplay(id_obj)) {
+      return;
+    }
     id_obj.time = PghTime();
     id_obj.key = this.state.counter;
     this.setState({counter: this.state.counter + 1});
