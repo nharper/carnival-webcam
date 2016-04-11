@@ -1,6 +1,7 @@
 var AudioControl = require('./AudioControl');
 var Clock = require('./Clock');
 var IDList = require('./IDList');
+var IDStore = require('./IDStore');
 var React = require('react');
 
 module.exports = React.createClass({
@@ -12,12 +13,7 @@ module.exports = React.createClass({
     }),
   },
   getInitialState: function() {
-    var id_store = {
-      prettyPrint: function(data) {
-        return data.unitID + ' ' + data.op + ' ' + data.arg;
-      }
-    };
-    return {id_store: id_store};
+    return {id_store: IDStore};
   },
   render: function() {
     var streams = [];
