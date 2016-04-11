@@ -11,6 +11,14 @@ module.exports = React.createClass({
       }
     }),
   },
+  getInitialState: function() {
+    var id_store = {
+      prettyPrint: function(data) {
+        return data.unitID + ' ' + data.op + ' ' + data.arg;
+      }
+    };
+    return {id_store: id_store};
+  },
   render: function() {
     var streams = [];
     for (var i in this.props.streams) {
@@ -20,6 +28,7 @@ module.exports = React.createClass({
             key={stream.name}
             name={stream.name}
             url={stream.location}
+            id_store={this.state.id_store}
         />
       );
     }

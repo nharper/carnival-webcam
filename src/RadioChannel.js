@@ -11,7 +11,7 @@ module.exports = function(path, context) {
 
   // Create MDC decoder.
   this.decoder_ = new MdcDecoder(context.sampleRate);
-  this.decoder_.setCallback(function(x) {console.log(x);});
+  this.setCallback = this.decoder_.setCallback.bind(this.decoder_);
 
   // Create simple script processor audio node to copy samples into
   // MDC decoder.

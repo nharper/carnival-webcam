@@ -1,13 +1,18 @@
 var React = require('react');
 var RadioChannel = require('./RadioChannel');
+var IDTable = require('./IDTable');
 
 module.exports = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
+    id_store: React.PropTypes.object.isRequired,
   },
   getInitialState: function() {
-    return {vol: 100, left: true, right: true};
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    var context = new AudioContext();
+    var channel = new RadioChannel(this.props.url, context);
+    return {vol: 100, left: true, right: true, channel: channel};
   },
   changeVolume: function() {
     this.setState({vol: this.refs.vol.value});
@@ -17,12 +22,6 @@ module.exports = React.createClass({
   },
   toggleRight: function() {
     this.setState({right: !this.state.right});
-  },
-  componentDidMount: function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    var context = new AudioContext();
-    var channel = new RadioChannel(this.props.url, context);
-    this.setState({channel: channel});
   },
   componentDidUpdate: function() {
     this.state.channel.setLeftGain(this.state.left ? this.state.vol / 100 : 0);
@@ -50,7 +49,7 @@ module.exports = React.createClass({
           <a href="#" className={left_class} onClick={this.toggleLeft}>L</a><span> </span>
           <a href="#" className={right_class} onClick={this.toggleRight}>R</a>
         </span>
-        <p>TODO: ID table</p>
+        <IDTable channel={this.state.channel} id_store={this.props.id_store} />
       </div>
     );
   }
