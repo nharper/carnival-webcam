@@ -1,0 +1,4 @@
+Installation instructions:
+from the src directory, run npm intsall
+run build.sh
+point webserver at the webroot directory

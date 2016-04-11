@@ -2,7 +2,7 @@
 set -e
 cd "$(dirname "$0")"
 
-rm -r webroot
+rm -rf webroot
 mkdir webroot
 pushd src
   browserify -t [ babelify --presets [ react ] ] index.js -o ../webroot/index.js
