@@ -1,10 +1,11 @@
 var React = require('react');
 var Sidebar = require('./Sidebar');
 var Video = require('./Video');
+var VideoSelector = require('./VideoSelector');
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return {loading: true, config:{}};
+    return {loading: true, config:{}, active_video: 0};
   },
   componentDidMount: function() {
     var configRequest = new XMLHttpRequest();
@@ -26,6 +27,9 @@ module.exports = React.createClass({
     configRequest.open('GET', 'config.json', true);
     configRequest.send();
   },
+  changeVideo: function(video_index) {
+    this.setState({active_video: video_index});
+  },
   render: function() {
     var error = null;
     if (this.state.error) {
@@ -43,10 +47,15 @@ module.exports = React.createClass({
       return (
         <div className='container'>
           {error}
-          <Video id={this.state.config.video} />
+          <Video id={this.state.config.videos[this.state.active_video].id} />
           <Sidebar
               streams={this.state.config.streams}
-              callsigns={this.state.config.callsigns} />
+              callsigns={this.state.config.callsigns}>
+            <VideoSelector
+                videos={this.state.config.videos}
+                active_video={this.state.active_video}
+                onSelectionChange={this.changeVideo} />
+          </Sidebar>
         </div>
       );
     }

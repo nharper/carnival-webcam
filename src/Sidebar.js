@@ -36,6 +36,7 @@ module.exports = React.createClass({
     return (
       <div id="sidebar-wrapper">
         <div id="sidebar">
+          {this.props.children}
           <Clock />
 
           <div className="controls">
