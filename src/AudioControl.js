@@ -17,11 +17,13 @@ module.exports = React.createClass({
   changeVolume: function() {
     this.setState({vol: this.refs.vol.value});
   },
-  toggleLeft: function() {
+  toggleLeft: function(e) {
     this.setState({left: !this.state.left});
+    e.preventDefault();
   },
-  toggleRight: function() {
+  toggleRight: function(e) {
     this.setState({right: !this.state.right});
+    e.preventDefault();
   },
   componentDidUpdate: function() {
     this.state.channel.setLeftGain(this.state.left ? this.state.vol / 100 : 0);
