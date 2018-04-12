@@ -1,12 +1,10 @@
 var React = require('react');
 var RadioChannel = require('./RadioChannel');
-var IDTable = require('./IDTable');
 
 module.exports = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
     url: React.PropTypes.string.isRequired,
-    id_store: React.PropTypes.object.isRequired,
   },
   getInitialState: function() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -51,7 +49,6 @@ module.exports = React.createClass({
           <a href="#" className={left_class} onClick={this.toggleLeft}>L</a><span> </span>
           <a href="#" className={right_class} onClick={this.toggleRight}>R</a>
         </span>
-        <IDTable channel={this.state.channel} id_store={this.props.id_store} />
       </div>
     );
   }

@@ -1,7 +1,5 @@
 var AudioControl = require('./AudioControl');
 var Clock = require('./Clock');
-var IDList = require('./IDList');
-var IDStore = require('./IDStore');
 var React = require('react');
 
 module.exports = React.createClass({
@@ -12,14 +10,6 @@ module.exports = React.createClass({
       }
     }),
   },
-  getInitialState: function() {
-    return {id_store: IDStore};
-  },
-  componentDidMount: function() {
-    for (var id in this.props.callsigns) {
-      IDStore.setCallsign(id, this.props.callsigns[id]);
-    }
-  },
   render: function() {
     var streams = [];
     for (var i in this.props.streams) {
@@ -29,7 +19,6 @@ module.exports = React.createClass({
             key={stream.name}
             name={stream.name}
             url={stream.location}
-            id_store={this.state.id_store}
         />
       );
     }
@@ -42,7 +31,6 @@ module.exports = React.createClass({
           <div className="controls">
             <h2>Audio controls</h2>
             {streams}
-            <IDList />
           </div>
         </div>
       </div>
