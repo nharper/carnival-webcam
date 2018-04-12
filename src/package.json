@@ -7,11 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "Copyright 2016 Nick Harper",
+  "license": "Copyright 2018 Nick Harper",
   "dependencies": {
     "babel-preset-react": "^6.5.0",
-    "babelify": "^7.2.0",
-    "react": "^0.14.8",
-    "react-dom": "^0.14.8"
+    "babelify": "^8.0.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1"
   }
 }
