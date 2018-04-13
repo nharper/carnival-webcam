@@ -1,6 +1,5 @@
 var React = require('react');
 var Sidebar = require('./Sidebar');
-var Video = require('./Video');
 var VideoSelector = require('./VideoSelector');
 
 module.exports = React.createClass({
